@@ -18,5 +18,5 @@ function [w,vect,nr_pasi] = gradient_ideal(x,n,y,epsilon,maxIter,F)
         end
         i=i+1;
     end
-    nr_pasi = i;
+    nr_pasi = gradF;
 end

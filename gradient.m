@@ -25,6 +25,6 @@ function [w,vect,nr_pasi] = gradient(x,n,y,epsilon,maxIter)
         end
     i=i+1;
     end
-    nr_pasi = i;
+    nr_pasi = gradF;
 end
 

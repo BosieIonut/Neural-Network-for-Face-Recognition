@@ -1,6 +1,6 @@
 clc;clear;close all
 N_dum = 22;
-N_ionut = 20;
+N_ionut = 21;
 
 epsilon = 0.001; % marja eroarea 
 maxIter = 100000; % nr maxim de iteratii
@@ -27,8 +27,9 @@ for i=1:N_dum
         disp(nume);
         continue; 
     end
+    byass = int64(face_Location(3) * 10 / 100);
     Dumi_found_faces = Dumi_found_faces + 1;
-    face = imagine(face_Location(2):face_Location(2)+face_Location(4),face_Location(1):face_Location(1)+face_Location(3));
+    face = imagine(face_Location(2) - byass:face_Location(2)+face_Location(4)+byass,face_Location(1) - byass:face_Location(1)+face_Location(3) + byass);
      imagine = insertShape(imagine, 'Rectangle', face_Location);
      %imshow(imagine)
      
@@ -57,7 +58,8 @@ for i=1:N_ionut
         continue; 
     end
     Ionut_found_faces = Ionut_found_faces + 1;
-    face = imagine(face_Location(2):face_Location(2)+face_Location(4),face_Location(1):face_Location(1)+face_Location(3));
+    byass = int64(face_Location(3) * 10 / 100);
+    face = imagine(face_Location(2) - byass:face_Location(2)+face_Location(4)+byass,face_Location(1) - byass:face_Location(1)+face_Location(3) + byass);
      imagine = insertShape(imagine, 'Rectangle', face_Location);
      %imshow(imagine)
      
@@ -74,10 +76,11 @@ if(N_dum > Dumi_found_faces || N_ionut > Ionut_found_faces)
 else
     disp('Totul este in regula');
 end
+close all;
 n = Ionut_found_faces + Dumi_found_faces;
 y = [ones(1,Dumi_found_faces) zeros(1,Ionut_found_faces)]';
-F = @(w) 1/n * (-1 * y' * log(sigmoid(x' * w)) - (ones(n, 1) - y)' * log(1 - sigmoid(x' * w)));
-[w_g_c,vect_g_c,n_g_c] = gradient(x,n,y,epsilon,maxIter);
+F = @(w) 1/n * (-1 * y' * log(sigmoid(x(:,1:n)' * w)) - (ones(n, 1) - y)' * log(1 - sigmoid(x(:,1:n)' * w)));
+[w_g_c,vect_g_c,n_g_c] = gradient_ideal(x(:,1:n),n,y,epsilon,maxIter,F);
 plot(vect_g_c);
-close all;
+
 disp('Finished');

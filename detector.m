@@ -1,5 +1,5 @@
 %loading the video
-the_Image      = rgb2gray(imread('f_rec.jpg'));
+the_Image      = rgb2gray(imread('test18.jpg'));
 [width, height] = size(the_Image);
 
 if width>320
