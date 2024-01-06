@@ -6,7 +6,6 @@ function [w,vect,nr_pasi] = gradient(x,n,y,epsilon,maxIter)
         L = L + norm(x(:,i),2)^2;
     end
     L = L / 4;
-    L
     alpha = 1/L;
     plotmax = 500;
     vect = zeros(1,plotmax);
@@ -26,5 +25,6 @@ function [w,vect,nr_pasi] = gradient(x,n,y,epsilon,maxIter)
     i=i+1;
     end
     nr_pasi = gradF;
+    norm(gradF,2)
 end
 
